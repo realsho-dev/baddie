@@ -4,6 +4,11 @@ import discord
 from discord.ext import commands
 import os
 from dotenv import load_dotenv
+
+# Start the dummy health check server
+import healthcheck
+healthcheck.start()
+
 from bot.commands.moderation import setup_moderation
 from bot.commands.utility import setup_utility
 from bot.commands.ai import setup_ai
