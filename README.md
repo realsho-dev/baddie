@@ -12,5 +12,5 @@ A versatile Discord bot with moderation, utility, and AI features, built with Py
 ## Setup
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/realsho-dev/baddie.git
-   cd Baddie
+   git clone https://github.com/realsho-dev/wozzy.git
+   cd Wozzy
