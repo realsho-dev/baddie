@@ -109,7 +109,7 @@ def setup_moderation(bot):
         if not amount:
             await ctx.send(embed=discord.Embed(title="Error", description=f"Use `{bot.command_prefix}purge <number>`", color=0xCD5C5C))
             return
-        await ctx.channel.purge(limit=amount + 2)
+        await ctx.channel.purge(limit=amount + 1)
         confirmation = await ctx.send(embed=discord.Embed(
             title="Messages Purged",
             description=f"Count: {amount}",
