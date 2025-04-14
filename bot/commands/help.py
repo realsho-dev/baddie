@@ -1,4 +1,3 @@
-# help.py
 from discord.ext import commands
 import discord
 from discord import SelectOption, ui
