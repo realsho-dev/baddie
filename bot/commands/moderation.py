@@ -28,7 +28,6 @@ def setup_moderation(bot):
             description=f"Target: {member.name}\nReason: {reason or 'None'}",
             color=0xCD5C5C
         )
-        embed.set_footer(text=f"By {ctx.author}")
         await ctx.send(embed=embed)
         await log_action("Ban", member.name, reason, ctx.author)
 
@@ -43,7 +42,6 @@ def setup_moderation(bot):
             description=f"Target: {member.name}",
             color=0x9ACD32
         )
-        embed.set_footer(text=f"By {ctx.author}")
         await ctx.send(embed=embed)
         await log_action("Clear Warnings", member.name, None, ctx.author)
 
@@ -56,7 +54,6 @@ def setup_moderation(bot):
             description="Channel: This channel",
             color=0x9ACD32
         )
-        embed.set_footer(text=f"By {ctx.author}")
         await ctx.send(embed=embed)
         await log_action("Clear Slowmode", ctx.channel.name, None, ctx.author)
 
@@ -72,7 +69,6 @@ def setup_moderation(bot):
             description=f"Target: {member.name}\nReason: {reason or 'None'}",
             color=0xCD5C5C
         )
-        embed.set_footer(text=f"By {ctx.author}")
         await ctx.send(embed=embed)
         await log_action("Kick", member.name, reason, ctx.author)
 
@@ -85,7 +81,6 @@ def setup_moderation(bot):
             description="Channel: This channel",
             color=0xCD5C5C
         )
-        embed.set_footer(text=f"By {ctx.author}")
         await ctx.send(embed=embed)
         await log_action("Lock", ctx.channel.name, None, ctx.author)
 
@@ -102,7 +97,6 @@ def setup_moderation(bot):
             description=f"Target: {member.name}\nDuration: {time}",
             color=0xCD5C5C
         )
-        embed.set_footer(text=f"By {ctx.author}")
         await ctx.send(embed=embed)
         await log_action("Mute", member.name, f"Duration: {time}", ctx.author)
         await asyncio.sleep(int(time[:-1]) * 60 if time.endswith('m') else int(time))
@@ -114,15 +108,15 @@ def setup_moderation(bot):
         if not amount:
             await ctx.send(embed=discord.Embed(title="Error", description=f"Use `{bot.command_prefix}purge <number>`", color=0xCD5C5C))
             return
-        await ctx.channel.purge(limit=amount)
-        embed = discord.Embed(
+        await ctx.channel.purge(limit=amount + 2)
+        confirmation = await ctx.send(embed=discord.Embed(
             title="Messages Purged",
             description=f"Count: {amount}",
             color=0xCD5C5C
-        )
-        embed.set_footer(text=f"By {ctx.author}")
-        await ctx.send(embed=embed, delete_after=5)
+        ))
         await log_action("Purge", f"{amount} messages", None, ctx.author)
+        await asyncio.sleep(2)
+        await confirmation.delete()
 
     @bot.hybrid_command(name="setlogchannel")
     @commands.has_permissions(manage_channels=True)
@@ -137,7 +131,6 @@ def setup_moderation(bot):
             description=f"Channel: {channel.mention}",
             color=0x9ACD32
         )
-        embed.set_footer(text=f"By {ctx.author}")
         await ctx.send(embed=embed)
 
     @bot.hybrid_command(name="slowmode")
@@ -152,7 +145,6 @@ def setup_moderation(bot):
             description=f"Delay: {seconds} seconds",
             color=0x9ACD32
         )
-        embed.set_footer(text=f"By {ctx.author}")
         await ctx.send(embed=embed)
         await log_action("Slowmode", f"{seconds}s in {ctx.channel.name}", None, ctx.author)
 
@@ -169,7 +161,6 @@ def setup_moderation(bot):
             description=f"Target: {user.name}",
             color=0x9ACD32
         )
-        embed.set_footer(text=f"By {ctx.author}")
         await ctx.send(embed=embed)
         await log_action("Unban", user.name, None, ctx.author)
 
@@ -182,7 +173,6 @@ def setup_moderation(bot):
             description="Channel: This channel",
             color=0x9ACD32
         )
-        embed.set_footer(text=f"By {ctx.author}")
         await ctx.send(embed=embed)
         await log_action("Unlock", ctx.channel.name, None, ctx.author)
 
@@ -200,7 +190,6 @@ def setup_moderation(bot):
                 description=f"Target: {member.name}",
                 color=0x9ACD32
             )
-            embed.set_footer(text=f"By {ctx.author}")
             await ctx.send(embed=embed)
             await log_action("Unmute", member.name, None, ctx.author)
         else:
@@ -217,7 +206,6 @@ def setup_moderation(bot):
             description=f"Target: {member.name}\nReason: {reason or 'None'}",
             color=0xDAA520
         )
-        embed.set_footer(text=f"By {ctx.author}")
         await ctx.send(embed=embed)
         await log_action("Warn", member.name, reason, ctx.author)
 
@@ -231,5 +219,4 @@ def setup_moderation(bot):
             description=f"Target: {member.name}\nStatus: Not implemented",
             color=0xDAA520
         )
-        embed.set_footer(text=f"By {ctx.author}")
         await ctx.send(embed=embed)
